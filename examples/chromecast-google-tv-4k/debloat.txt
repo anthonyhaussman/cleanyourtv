@@ -1,0 +1,23 @@
+# Chromecast with Google TV Debloat List
+# Safe debloat list for Google TV on Sabrina (4K) and Boreal (HD).
+# Tested on Android 12 / 14.
+
+# Telemetry, Diagnostics & Analytics
+com.google.android.feedback
+com.google.android.partnersetup
+com.google.android.tv.remotecontrol.logging
+com.google.android.ondevicepersonalization.services
+com.google.android.federatedcompute
+
+# Ad Services & Recommendation Stubs
+com.google.android.tvrecommendations
+com.google.android.tvlauncher
+com.google.android.tv.axel
+android.autoinstalls.config.google.gtvpai
+
+# Unused Preloaded Apps & User-Selected Debloat
+com.google.android.videos
+com.google.android.play.games
+com.google.android.katniss
+com.google.android.syncadapters.calendar
+com.google.android.apps.education.cast2class
