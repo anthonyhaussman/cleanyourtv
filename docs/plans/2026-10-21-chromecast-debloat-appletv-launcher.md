@@ -4,7 +4,7 @@
 
 **Goal:** Safely debloat Chromecast with Google TV 4K, replace the stock ad-heavy launcher with a custom native Apple TV 4K style launcher (`com.gathin.tvhome`), preserve all hardware remote keys and Google Cast, verify step-by-step with real device screenshots, and close network ADB when finished.
 
-**Architecture:** A lightweight native Android TV launcher (Java, AndroidX, RecyclerView) with pitch-black Apple TV aesthetic, 4-app dock, frosted status pills, and 4-column scrollable app grid. Telemetry, bloat, and ad services are disabled via `pm disable-user --user 0` in reversible batches backed up to disk, while `InputKeyService` remaps physical remote keys for YouTube (keycode 190) and Netflix (keycode 191).
+**Architecture:** A lightweight native Android TV launcher (Java, AndroidX, RecyclerView) with pitch-black Apple TV aesthetic, 5-app dock, frosted status pills, and 5-column scrollable app grid. Telemetry, bloat, and ad services are disabled via `pm disable-user --user 0` in reversible batches backed up to disk, while `InputKeyService` remaps physical remote keys for YouTube (keycode 190) and Netflix (keycode 191).
 
 **Tech Stack:** Android (Java/AndroidX, minSdk 28, targetSdk 34), Gradle, Python 3 (`adb-shell`), ADB shell, Zsh.
 
@@ -179,7 +179,7 @@
 - Artifact: `launcher/app/build/outputs/apk/debug/app-debug.apk`
 
 **Interfaces:**
-- Consumes: User style preferences (Option A all-apps grid, 4-app dock, Outfit font, key remapping 190:YouTube and 191:Netflix).
+- Consumes: User style preferences (Option A all-apps grid, 5-app dock, Outfit font, key remapping 190:YouTube and 191:Netflix).
 - Produces: Compiled debug launcher APK.
 
 - [ ] **Step 1: Check installed package names for YouTube and Netflix on the TV**
@@ -188,7 +188,7 @@
 
 - [ ] **Step 2: Configure `launcher/app/src/main/res/values/config.xml`**
   Update `config.xml`:
-  - `columns`: 4
+  - `columns`: 5
   - `dock_row`: true
   - `dock_title`: true
   - `rows_below_dock`: 0 (full scrollable grid below dock)
@@ -197,7 +197,7 @@
     <item>190:com.google.android.youtube.tv</item>
     <item>191:com.netflix.ninja</item>
     ```
-  - Ask user which 4 apps they prefer pinned in the dock, and set `dock_apps`.
+  - Ask user which apps they prefer pinned in the dock (user selected 5 apps: YouTube, Netflix, Prime Video, Disney+, Max), and set `dock_apps`.
 
 - [ ] **Step 3: Ensure Option A (all apps in grid) in `AppAdapter.java`**
   Verify that `AppAdapter.java` populates the scrollable grid with all non-hidden installed applications below the pinned dock row.
@@ -209,7 +209,7 @@
 - [ ] **Step 5: Commit launcher configuration**
   ```bash
   git add launcher/app/src/main/res/values/config.xml launcher/app/src/main/java/com/gathin/tvhome/AppAdapter.java
-  git commit -m "feat: configure Apple TV 4K style launcher with 4-app dock and remote key mappings"
+  git commit -m "feat: configure Apple TV 4K style launcher with 5-app dock and remote key mappings"
   ```
 
 ---
@@ -351,7 +351,7 @@
   `TV_HOST=<tv_ip> tools/venv/bin/python tools/tv.py 'screencap -p /data/local/tmp/07-final.png'`
   `TV_HOST=<tv_ip> tools/venv/bin/python tools/tv.py --pull /data/local/tmp/07-final.png docs/screenshots/07-final-home-screen.png`
   `TV_HOST=<tv_ip> tools/venv/bin/python tools/tv.py 'rm -f /data/local/tmp/07-final.png'`
-  Verify visual aesthetics: pitch black background, Outfit font clock, frosted pills, 4-app dock, clean app grid.
+  Verify visual aesthetics: pitch black background, Outfit font clock, frosted pills, 5-app dock, clean app grid.
 
 - [ ] **Step 2: Update `README.md` with Chromecast with Google TV 4K guide**
   Document the setup, debloat list, restore instructions, and Cast fix script.

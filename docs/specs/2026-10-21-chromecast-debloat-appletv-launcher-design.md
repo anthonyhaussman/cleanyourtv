@@ -20,8 +20,8 @@ Google TV on the Chromecast with Google TV 4K consumes significant memory and CP
 - Build and install the native Java/AndroidX Leanback launcher (`com.gathin.tvhome`) in Apple TV 4K style:
   - Pitch-black background (`#000000`).
   - Top status bar: Greeting, thin clock, date in open-license font (Outfit), and translucent pills for Inputs, active Wi-Fi SSID, and Settings.
-  - 4-app bottom dock with fluid glass highlight and ambient glow sampled from the focused app's banner color.
-  - **Option A (Unified Grid)**: A 4-column grid showing all installed applications that smoothly scrolls up when pressing Down.
+  - 5-app bottom dock (YouTube, Netflix, Prime Video, Disney+, Max) with fluid glass highlight and ambient glow sampled from the focused app's banner color.
+  - **Option A (Unified Grid)**: A 5-column grid showing all installed applications that smoothly scrolls up when pressing Down.
   - Deterministic D-pad navigation with focus memory.
 - Safely disable the stock launcher (`launcherx`) and setup wizard (`setupwraith`) without breaking saved Wi-Fi connections or causing boot-loops.
 - Remap remote buttons (e.g. YouTube button sending keycode 190 / `BUTTON_3`, Settings) via the launcher's `InputKeyService`.
@@ -71,8 +71,8 @@ Google TV on the Chromecast with Google TV 4K consumes significant memory and CP
 ### Phase 4: Apple TV 4K Launcher Implementation & Configuration
 1. Launcher codebase: `com.gathin.tvhome` in `launcher/`.
 2. Configure `launcher/app/src/main/res/values/config.xml`:
-   - `dock_apps`: 4 selected user apps.
-   - `columns`: 4.
+   - `dock_apps`: 5 selected user apps (YouTube, Netflix, Prime Video, Disney+, Max).
+   - `columns`: 5.
    - `rows_below_dock`: 0 (dock parked at bottom, grid scrolls up).
    - `dock_title`: true.
    - `dock_row`: true.
@@ -107,7 +107,7 @@ Google TV on the Chromecast with Google TV 4K consumes significant memory and CP
 
 ### Decided by User
 - TV Model: Chromecast with Google TV 4K.
-- Style: Apple TV 4K (pitch black, top bar pills, 4-app dock with ambient glow, 4-column grid).
+- Style: Apple TV 4K (pitch black, top bar pills, 5-app dock with ambient glow, 5-column grid).
 - App Grid Mode: Option A (all installed apps listed in the grid).
 - Working Method: Step-by-step on real device, verified with screenshots, checklist questions for personal preferences.
 - Google Cast: User actively casts video/music from phone/laptop. Cast receiver (`com.google.android.apps.mediashell`) must remain enabled and operational. The setupwraith credential loading ritual will be verified and documented.

@@ -10,7 +10,6 @@ com.google.android.ondevicepersonalization.services
 com.google.android.federatedcompute
 
 # Ad Services & Recommendation Stubs
-com.google.android.tvrecommendations
 com.google.android.tvlauncher
 com.google.android.tv.axel
 android.autoinstalls.config.google.gtvpai
@@ -20,4 +19,6 @@ com.google.android.videos
 com.google.android.play.games
 com.google.android.katniss
 com.google.android.syncadapters.calendar
-com.google.android.apps.education.cast2class
+
+# Setup Wizard (disabled to prevent Home hijacking)
+com.google.android.tungsten.setupwraith

@@ -25,6 +25,7 @@ if (-not (Test-Path $py)) {
 }
 
 $StockLauncher = 'com.google.android.apps.tv.launcherx'
+$SetupWraith = 'com.google.android.tungsten.setupwraith'
 
 Write-Host "=== CleanYourTV Restore Script ==="
 Write-Host "Target TV: $TvHost"
@@ -33,10 +34,22 @@ Write-Host "Stock Launcher: $StockLauncher"
 if ($List -and (Test-Path $List)) {
     Write-Host "Restoring packages from: $List"
     & (Join-Path $repo 'tools\restore.ps1') -TvHost $TvHost -List $List -Stock $StockLauncher
+    & $py -I (Join-Path $repo 'tools\tv.py') "pm enable --user 0 $SetupWraith"
 } else {
     Write-Host "Restoring stock launcher and default home..."
+    & $py -I (Join-Path $repo 'tools\tv.py') "pm enable --user 0 $SetupWraith"
     & $py -I (Join-Path $repo 'tools\tv.py') "pm enable --user 0 $StockLauncher"
-    & $py -I (Join-Path $repo 'tools\tv.py') "cmd package set-home-activity $StockLauncher/.MainActivity"
+
+    $resolved = & $py -I (Join-Path $repo 'tools\tv.py') "cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.HOME $StockLauncher"
+    $homeComponent = "$StockLauncher/.home.HomeActivity"
+    if ($resolved -and ($resolved -like "*$StockLauncher*")) {
+        $lines = $resolved -split "`r?`n" | Where-Object { $_ -match "$StockLauncher" }
+        if ($lines.Count -gt 0) {
+            $homeComponent = $lines[-1].Trim()
+        }
+    }
+    Write-Host "Setting Home activity to: $homeComponent"
+    & $py -I (Join-Path $repo 'tools\tv.py') "cmd package set-home-activity --user 0 $homeComponent"
     & $py -I (Join-Path $repo 'tools\tv.py') "settings put global window_animation_scale 1.0"
     & $py -I (Join-Path $repo 'tools\tv.py') "settings put global transition_animation_scale 1.0"
     & $py -I (Join-Path $repo 'tools\tv.py') "settings put global animator_duration_scale 1.0"
