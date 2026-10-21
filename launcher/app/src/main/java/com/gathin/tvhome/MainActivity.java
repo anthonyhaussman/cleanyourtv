@@ -795,7 +795,24 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (handleSettingsKey(event)) return true;
-        if (!reordering) return super.dispatchKeyEvent(event);
+        if (!reordering) {
+            int code = event.getKeyCode();
+            if (code == KeyEvent.KEYCODE_BACK || code == KeyEvent.KEYCODE_ESCAPE) {
+                if (event.getAction() == KeyEvent.ACTION_UP) {
+                    if (openPopup != null && openPopup.isShowing()) {
+                        openPopup.dismiss();
+                        return true;
+                    }
+                    if (doubleBackDetector.onBackPress(SystemClock.elapsedRealtime())) {
+                        startActivity(new Intent(this, ScreensaverActivity.class));
+                        overridePendingTransition(android.R.anim.fade_in, 0);
+                        return true;
+                    }
+                }
+                return true;
+            }
+            return super.dispatchKeyEvent(event);
+        }
         if (dockEditing) return dispatchDockEdit(event);
         boolean down = event.getAction() == KeyEvent.ACTION_DOWN;
         int code = event.getKeyCode();
