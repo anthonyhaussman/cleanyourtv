@@ -25,10 +25,10 @@
             <TextClock
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:format12Hour="h:mm"
-                android:format24Hour="HH:mm"
+                android:format12Hour="h:mm:ss"
+                android:format24Hour="HH:mm:ss"
                 android:textColor="#E6FFFFFF"
-                android:textSize="120sp"
+                android:textSize="105sp"
                 android:fontFamily="@font/outfit_extralight"
                 android:letterSpacing="-0.04"
                 android:includeFontPadding="false" />
