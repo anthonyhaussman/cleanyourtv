@@ -1042,9 +1042,18 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         });
     }
 
+    private final DoubleBackDetector doubleBackDetector = new DoubleBackDetector();
+
     @Override
     public void onBackPressed() {
-        // Home screen: Back goes nowhere.
+        if (openPopup != null && openPopup.isShowing()) {
+            openPopup.dismiss();
+            return;
+        }
+        if (doubleBackDetector.onBackPress(android.os.SystemClock.elapsedRealtime())) {
+            startActivity(new Intent(this, ScreensaverActivity.class));
+            overridePendingTransition(android.R.anim.fade_in, 0);
+        }
     }
 
     // ---- glass highlight -------------------------------------------------------------------------
